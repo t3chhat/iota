@@ -5,12 +5,33 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var layouts = require('express-ejs-layouts');
 
+const mariadb = require('mariadb/callback');
+const dotenv = require('dotenv');
+dotenv.config();
+const db = mariadb.createConnection({host: process.env.DB_HOST,
+                                    user: process.env.DB_USER,
+                                    password: process.env.DB_PASSWORD,
+                                    database: process.env.DB_DATABASE,
+                                    port: process.env.DB_PORT});
+// connect to database
+db.connect((err) => {
+  if (err) {
+    console.log("Unable to connect to database due to error: " + err);
+res.render('error');
+  } else {
+    console.log("Connected to DB");
+}
+});
+global.db = db;
+
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var aboutRouter = require('./routes/about');
 var contactRouter = require('./routes/contact');
 var privacyRouter = require('./routes/privacy');
 var helpRouter = require('./routes/help');
+var productRouter = require('./routes/product');
 
 var app = express();
 
@@ -31,6 +52,7 @@ app.use('/about', aboutRouter);
 app.use('/contact', contactRouter);
 app.use('/help', helpRouter);
 app.use('/privacy', privacyRouter);
+app.use('/product', productRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
