@@ -6,7 +6,7 @@ var router = express.Router();
 // ==================================================
 
 router.get('/', function(req, res, next) {
-let query = "SELECT product_id, product_name, description, FROM PRODUCT";
+let query = "SELECT id, product_name, description, FROM PRODUCT";
 
     // execute query
     db.query(query, (err, result) => {
