@@ -1,18 +1,34 @@
 <% if (allrecs.length > 0) {%>
-    <table>
-        <% allrecs.forEach((recref, index) => { %>
+    <table border="1">
+        <tr>
+            <th>Product ID</th>
+            <th>Product Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Size</th>
+            <th>Color</th>
+            <th>Sold</th>
+            <th>Homepage</th>
+        </tr>
+
+
+      <% allrecs.forEach((recref, index) => { %>
         <tr>
             <td><%= recref.id %></td>
             <td><%= recref.product_name %></td>
             <td><%= recref.description %></td>
-            <td><a href='/product/<%= recref.id %>/show'>Details</a></td>
+            <td><%= recref.price %></td>
+            <td><%= recref.size %></td>
+            <td><%= recref.color %></td>
+            <td><%= recref.sold %></td>
+            <td><a href='/product/<%= recref.id %>/show'> Details</a></td>
             <td><a href='/product/<%= recref.id %>/edit'>Edit</a></td>
             <td><a href='/product/<%= recref.id %>/delete' onclick="return confirm('Are you sure you want to delete this record?');">Delete</a></td>
-        </tr>
+            </tr>
     <% }); %>
     </table>
     <% } else { %>
-    <p>Not Records Available</p>
+        <p>Not Records Available</p>
     <% } %>
-    <p> <a href='/product/addrecord'>Add New</a> </p>
-    
+
+<p> <a href='/product/addrecord'>Add New</a> </p>

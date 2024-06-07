@@ -7,6 +7,7 @@ var layouts = require('express-ejs-layouts');
 
 const mariadb = require('mariadb/callback');
 const dotenv = require('dotenv');
+
 dotenv.config();
 const db = mariadb.createConnection({host: process.env.DB_HOST,
                                     user: process.env.DB_USER,
