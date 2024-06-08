@@ -1,0 +1,17 @@
+<h1> Edit Product</h1>
+<form action="/product/save" method="post">
+    <input type="hidden" name="id" value="<%= onerec.id %>" >
+<table>
+<tr> <td> Product Name: </td> <td> <input type="text" value="<%= onerec.product_name %>" name="product_name" required> </td> </tr>
+<tr> <td> Image: </td> <td> <input type="text" value="<%= onerec.prod_image %>"name="prod_image" required> </td> </tr>
+<tr> <td> Description: </td> <td> <textarea name="description" rows="10" cols="30" value="<%= onerec.description %>"placeholder="Description"></textarea> </td> </tr>
+<tr> <td> Price: </td> <td> <input type="text" value="<%= onerec.price %>" name="price" required> </td> </tr>
+<tr> <td> Size: </td> <td> <input type="text" value="<%= onerec.text %>"name="size" required> </td> </tr>
+<tr> <td> Color: </td> <td> <input type="text" value="<%= onerec.color %>"name="color" required> </td> </tr>
+<tr> <td> Brand: </td> <td> <input type="number" value="<%= onerec.brand_id %>"name="brand_id" required> </td> </tr>
+<tr> <td> Category: </td> <td> <input type="number" value="<%= onerec.category_id %>"name="category_id" required> </td> </tr>
+<tr> <td> Sold: </td> <td> <input type="number" value="<%= onerec.sold %>"name="sold" required> </td> </tr>
+
+</table>
+<button type="submit">Save</button>
+</form>
