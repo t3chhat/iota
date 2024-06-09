@@ -33,6 +33,8 @@ var contactRouter = require('./routes/contact');
 var privacyRouter = require('./routes/privacy');
 var helpRouter = require('./routes/help');
 var productRouter = require('./routes/product');
+var customerRouter = require('./routes/customer');
+var order_detailRouter = require('./routes/order_detail');
 
 var app = express();
 
@@ -54,6 +56,8 @@ app.use('/contact', contactRouter);
 app.use('/help', helpRouter);
 app.use('/privacy', privacyRouter);
 app.use('/product', productRouter);
+app.use('/customer', customerRouter);
+app.use('/order_detail', order_detailRouter);
 
 
 // catch 404 and forward to error handler

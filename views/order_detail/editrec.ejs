@@ -1,0 +1,14 @@
+<h1> Edit Product</h1>
+<form action="/order_detail/save" method="post">
+    <input type="hidden" name="id" value="<%= onerec.id %>" >
+    <input type="hidden" name="user_id" value="<%= onerec.user_id %>" >
+<table>
+
+<tr> <td> Order Date: </td> <td> <input type="date" value="<%= onerec.order_date %>" name="order_date"> </td> </tr>
+<tr> <td> Total Amount: </td> <td> <input type="text" value="<%= onerec.total_amount %>" name="total_amount" required> </td> </tr>
+<tr> <td> Order Status: </td> <td> <input type="text" value="<%= onerec.order_status %>" name="order_status" required> </td> </tr>
+
+</table>
+
+<button type="submit">Save</button>
+</form>
