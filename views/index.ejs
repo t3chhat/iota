@@ -1,17 +1,20 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-    <p>
-      <a href="/">Home</a>
-      <a href="/about">About</a>
-      <a href="/contact">Contact</a> 
-    </p>
-    <p>Iota is the premier hub for affordable vintage clothing. We source the best possible garments for you to add to your collection of fashionable pieces. All styles, all quality, all afforable.</p>
-  </body>
-</html>
+<p>Iota is the premier hub for affordable vintage clothing. We source the best possible garments for you to add to your collection of fashionable pieces. All styles, all quality, all afforable.</p>
+<hr>
+<% if (allrecs.length > 0) {%>
+  <% allrecs.forEach((recref, index) => { %>
+    <product>
+    <table>
+      <tr> <td colspan="2"><%= recref.product_name %></td></tr>
+      <tr> <td colspan="2"><%= recref.prod_image %></td></tr>
+      <tr> <td colspan="2"><%= recref.description %></td></tr>
+      <tr> <td><%= recref.price %></td></tr>
+      <tr> <td><%= recref.size %></td></tr>
+      <tr> <td><%= recref.sold %></td></tr>
+        <td><a href='/product/<%= recref.id %>/show'>Details</a></td></tr>
+    </table>
+  </product>
+  <% }); %>
+  <% } else { %>
+    <p>No products available.</p>
+
+<% } %>
