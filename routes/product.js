@@ -6,7 +6,7 @@ var router = express.Router();
 // URL: http://localhost:3002/product/ 
 // ==================================================
 router.get('/', function(req, res, next) {
-let query = "SELECT id, product_name, description, price, size, color, brand_id, category_id, sold FROM product"; 
+let query = "SELECT id, product_name, description, price, size, color, brand_id, category_id, sold, homepage FROM product"; 
 
     // execute query
     db.query(query, (err, result) => {
@@ -22,7 +22,7 @@ let query = "SELECT id, product_name, description, price, size, color, brand_id,
 // Route to view one specific record. Notice the view is one record
 // ==================================================
 router.get('/:recordid/show', function(req, res, next) {
-    let query = "SELECT id, product_name, description, price, size, color, brand_id, category_id, sold FROM product WHERE id = " + req.params.recordid;
+    let query = "SELECT id, product_name, description, price, size, color, brand_id, category_id, sold, homepage FROM product WHERE id = " + req.params.recordid;
 
     // execute query
     db.query(query, (err, result) => {
@@ -48,10 +48,22 @@ router.get('/addrecord', function(req, res, next) {
 // ==================================================
 router.post('/', function(req, res, next) {
 
-    let insertquery = "INSERT INTO product (product_name, prod_image, description, price, size, color, brand_id, category_id, sold) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    var homepage_value=0;
+        if (req.body.homepage)
+            {
+                homepage_value = 1;
+            }
+
+    var sold_value=0;
+        if (req.body.sold)
+            {
+                sold_value = 1;
+            }
+
+    let insertquery = "INSERT INTO product (product_name, prod_image, description, price, size, color, brand_id, category_id, sold, homepage) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     db.query(insertquery,[req.body.product_name, req.body.prod_image, req.body.description, req.body.price,
-    req.body.size, req.body.color, req.body.brand_id, req.body.category_id, req.body.sold,],(err, result) => {
+    req.body.size, req.body.color, req.body.brand_id, req.body.category_id, sold_value, homepage_value],(err, result) => {
         if (err) {
             console.log(err);
             res.render('error');
@@ -65,7 +77,7 @@ router.post('/', function(req, res, next) {
 // Route to edit one specific record.
 // ==================================================
 router.get('/:recordid/edit', function(req, res, next) {
-    let query = "SELECT id, product_name, prod_image, description, price, size, color, brand_id, category_id, sold FROM product WHERE id = " + req.params.recordid;
+    let query = "SELECT id, product_name, prod_image, description, price, size, color, brand_id, category_id, sold, homepage FROM product WHERE id = " + req.params.recordid;
 
     // execute query
     db.query(query, (err, result) => {
@@ -83,9 +95,21 @@ router.get('/:recordid/edit', function(req, res, next) {
 // Route to save edited data in database.
 // ==================================================
 router.post('/save', function(req, res, next) {
-    let updatequery = "UPDATE product SET product_name = ?, prod_image = ?, description = ?, price = ?, size = ?, color = ?, brand_id = ?, category_id = ?, sold = ? WHERE id = " + req.body.id;
+    let updatequery = "UPDATE product SET product_name = ?, prod_image = ?, description = ?, price = ?, size = ?, color = ?, brand_id = ?, category_id = ?, sold = ?, homepage = ? WHERE id = " + req.body.id;
 
-    db.query(updatequery,[req.body.product_name, req.body.prod_image, req.body.description, req.body.price, req.body.size, req.body.color, req.body.brand_id, req.body.category_id, req.body.sold],(err, result) => {
+    var homepage_value=0;
+        if (req.body.homepage)
+            {
+                homepage_value = 1;
+            }
+
+    var sold_value=0;
+        if (req.body.sold)
+            {
+                sold_value = 1;
+            }
+
+    db.query(updatequery,[req.body.product_name, req.body.prod_image, req.body.description, req.body.price, req.body.size, req.body.color, req.body.brand_id, req.body.category_id, sold_value, homepage_value],(err, result) => {
 
         if (err) {
             console.log(err);

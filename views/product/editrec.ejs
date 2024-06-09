@@ -10,7 +10,22 @@
 <tr> <td> Color: </td> <td> <input type="text" value="<%= onerec.color %>"name="color" required> </td> </tr>
 <tr> <td> Brand: </td> <td> <input type="number" value="<%= onerec.brand_id %>"name="brand_id" required> </td> </tr>
 <tr> <td> Category: </td> <td> <input type="number" value="<%= onerec.category_id %>"name="category_id" required> </td> </tr>
-<tr> <td> Sold: </td> <td> <input type="number" value="<%= onerec.sold %>"name="sold" required> </td> </tr>
+<tr> <td> Sold: </td> <td>
+            <% if (onerec.sold) { %>
+                <input type="checkbox" name="sold" checked>
+            <% } else { %>
+                <input type="checkbox" name="sold">
+            <% } %>
+        </td> </tr>
+        
+<tr> <td> Homepage: </td> <td>
+    
+            <% if (onerec.homepage) { %>
+                <input type="checkbox" name="homepage" checked>
+            <% } else { %>
+                <input type="checkbox" name="homepage">
+            <% } %>
+        </td> </tr>
 
 </table>
 <button type="submit">Save</button>
