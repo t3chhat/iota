@@ -1,0 +1,10 @@
+<h1> Edit Product</h1>
+<form action="/category/save" method="post">
+    <input type="hidden" name="id" value="<%= onerec.id %>" >
+<table>
+
+<tr> <td> Category Name </td> <td> <input type="text" value="<%= onerec.category_name %>" name="category_name"> </td> </tr>
+</table>
+
+<button type="submit">Save</button>
+</form>

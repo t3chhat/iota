@@ -1,0 +1,23 @@
+<% if (allrecs.length > 0) {%>
+    <table border="1">
+        <tr>
+            <th>Brand ID</th>
+            <th>Brand Name</th>
+        </tr>
+
+
+    <% allrecs.forEach((recref, index) => { %>
+        <tr>
+            <td><%= recref.id %></td>
+            <td><%= recref.brand_name %></td>>
+            <td><a href='/brand/<%= recref.id %>/show'> Details</a></td>
+            <td><a href='/brand/<%= recref.id %>/edit'>Edit</a></td>
+            <td><a href='/brand/<%= recref.id %>/delete' onclick="return confirm('Are you sure you want to delete this record?');">Delete</a></td>
+            </tr>
+    <% }); %>
+    </table>
+    <% } else { %>
+        <p>Not Records Available</p>
+    <% } %>
+
+<p> <a href='/brand/addrecord'>Add New</a> </p>
