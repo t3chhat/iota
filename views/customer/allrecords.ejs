@@ -19,6 +19,7 @@
             <th>Card Number</th>
             <th>Card Expiry</th>
             <th>Card CVV</th>
+            <th>Admin?</th>
         </tr>
 
 
@@ -42,8 +43,11 @@
             <td><%= recref.card_number %></td>
             <td><%= recref.card_expiry.toLocaleDateString('en-US') %></td>
             <td><%= recref.card_cvv %></td>
+            <td><%= recref.isadmin %></td>
             <td><a href='/customer/<%= recref.id %>/show'> Details</a></td>
             <td><a href='/customer/<%= recref.id %>/edit'>Edit</a></td>
+            <td><a href='/customer/<%= recref.id %>/makeadmin'>Admin?</a></td>
+            <td><a href='/customer/<%= recref.id %>/removeadmin'>Remove Admin?</a></td>
             <td><a href='/customer/<%= recref.id %>/delete' onclick="return confirm('Are you sure you want to delete this record?');">Delete</a></td>
             </tr>
     <% }); %>

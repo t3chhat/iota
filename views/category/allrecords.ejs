@@ -9,7 +9,7 @@
     <% allrecs.forEach((recref, index) => { %>
         <tr>
             <td><%= recref.id %></td>
-            <td><%= recref.category_name %></td>>
+            <td><%= recref.category_name %></td>
             <td><a href='/category/<%= recref.id %>/show'> Details</a></td>
             <td><a href='/category/<%= recref.id %>/edit'>Edit</a></td>
             <td><a href='/category/<%= recref.id %>/delete' onclick="return confirm('Are you sure you want to delete this record?');">Delete</a></td>

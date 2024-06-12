@@ -16,7 +16,7 @@ router.get('/register', function(req, res, next) {
 // URL: http://localhost:3002/product/ 
 // ==================================================
 router.get('/', function(req, res, next) {
-let query = "SELECT id, first_name, middle_name, last_name, email_address, phone_number, username, password, address_line1, address_line2, city, state, zip_code, country, payment_method, card_number, card_expiry, card_cvv FROM customer"; 
+let query = "SELECT id, first_name, middle_name, last_name, email_address, phone_number, username, password, address_line1, address_line2, city, state, zip_code, country, payment_method, card_number, card_expiry, card_cvv, isadmin FROM customer"; 
 
     // execute query
     db.query(query, (err, result) => {
@@ -28,11 +28,49 @@ let query = "SELECT id, first_name, middle_name, last_name, email_address, phone
     });
 });
 
+
+// ==================================================
+// makeadmin
+// ==================================================
+router.get('/:recordid/makeadmin', function(req, res, next) {
+    let query = "UPDATE customer SET isadmin = 1 WHERE id = " + req.params.recordid;
+
+    // execute query
+    db.query(query, (err, result) => {
+        if (err) {
+            console.log(err);
+            res.render('error');
+        } else {
+            res.render('customer/');
+        }
+    });
+});
+
+
+// ==================================================
+// removeadmin
+// ==================================================
+router.get('/:recordid/removeadmin', function(req, res, next) {
+    let query = "UPDATE customer set isadmin = 0 WHERE id = " + req.params.recordid;
+
+    // execute query
+    db.query(query, (err, result) => {
+        if (err) {
+            console.log(err);
+            res.render('error');
+        } else {
+            res.render('customer/');
+        }
+    });
+});
+
+
+
 // ==================================================
 // Route to view one specific record. Notice the view is one record
 // ==================================================
 router.get('/:recordid/show', function(req, res, next) {
-    let query = "SELECT id, first_name, middle_name, last_name, email_address, phone_number, username, password, address_line1, address_line2, city, state, zip_code, country, payment_method, card_number, card_expiry, card_cvv FROM customer WHERE id = " + req.params.recordid;
+    let query = "SELECT id, first_name, middle_name, last_name, email_address, phone_number, username, password, address_line1, address_line2, city, state, zip_code, country, payment_method, card_number, card_expiry, card_cvv, isadmin FROM customer WHERE id = " + req.params.recordid;
 
     // execute query
     db.query(query, (err, result) => {
