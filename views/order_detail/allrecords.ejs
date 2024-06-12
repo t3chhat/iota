@@ -14,7 +14,7 @@
             <td><%= recref.id %></td>
             <td><%= recref.user_id %></td>
             <td><%= recref.order_date.toLocaleDateString('en-US') %></td>
-            <td><%= recref.total_amount %></td>
+            <td><%= Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(recref.total_amount) %> </td>
             <td><%= recref.order_status %></td>
             <td><a href='/order_detail/<%= recref.id %>/show'> Details</a></td>
             <td><a href='/order_detail/<%= recref.id %>/edit'>Edit</a></td>

@@ -3,6 +3,6 @@
     <tr> <td> Order Item ID </td> <td> <%= onerec.id %> </td> </tr>
     <tr> <td> Order ID: </td> <td> <%= onerec.order_id %> </td> </tr>
     <tr> <td> Product ID: </td> <td> <%= onerec.product_id %> </td> </tr>
-    <tr> <td> Price: </td> <td> <%= onerec.price %> </td> </tr>
+    <tr> <td> Price: </td> <td> <%= Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(onerec.price) %> </td> </tr>
     <tr> <td> Quantity: </td> <td> <%= onerec.quantity %> </td> </tr>
 </table>

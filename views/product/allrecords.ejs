@@ -21,7 +21,7 @@
             <td><%= recref.product_name %></td>
             <td><%= recref.prod_image %></td>
             <td><%= recref.description %></td>
-            <td><%= recref.price %></td>
+            <td><%= Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(recref.price) %></td>
             <td><%= recref.size %></td>
             <td><%= recref.color %></td>
             <td><%= recref.brand_id %> </td>
