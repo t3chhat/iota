@@ -4,7 +4,7 @@
     <td width='60%' align='center'><h1>Iota</h1></td>
 
         <td width='10%' align='center'>
-            <% if(session.id > 0) { %>
+            <% if(session.customer_id > 0) { %>
                 <b> Hello <b> <%= session.custname %>! </b> </br>
                 <a href='/customer/logout'>Logout</a>
             <% } else { %>

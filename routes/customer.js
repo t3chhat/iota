@@ -63,7 +63,7 @@ router.get('/login', function(req, res, next) {
 // Route Check Login Credentials
 // ==================================================
 router.post('/login', function(req, res, next) {
-    let query = "select id, first_name, last_name, password from customer WHERE username = '" + req.body.username + "'";
+    let query = "SELECT id, first_name, last_name, password from customer WHERE username = '" + req.body.username + "'";
     // execute query
     db.query(query, (err, result) => {
         if (err) {res.render('error');}
@@ -75,8 +75,8 @@ router.post('/login', function(req, res, next) {
                 (err, result1) {
                     if(result1) {
                         // Password is correct. Set session variables for user.
-                        var custid = result[0].id;
-                        req.session.id = custid;
+                        var customer_id = result[0].id;
+                        req.session.customer_id = customer_id;
                         var custname = result[0].first_name + " "+ result[0].last_name;
                         req.session.custname = custname;
                         res.redirect('/');
@@ -89,6 +89,58 @@ router.post('/login', function(req, res, next) {
         else {res.render('customer/login', {message: "Wrong Username"});}
         }
     });
+});
+
+// ==================================================
+// Route save cart items to SALEORDER and ORDERDETAILS tables
+// ==================================================
+router.get('/checkout', function(req, res, next) {
+    var proditemprice = 0;
+    // Check to make sure the customer has logged-in
+    if (typeof req.session.user_id !== 'undefined' && req.session.user_id ) {
+        // Save SALEORDER Record:
+        let insertquery = "INSERT INTO order_detail(user_id, order_date, total_amount, order_status) VALUES (?, now(), NULL, 'Pending')";
+            db.query(insertquery,[req.session.user_id],(err, result) => {
+                if (err) {
+                    console.log(err);
+                    res.render('error');
+                } else {
+        // Obtain the order_id value of the newly created SALEORDER Record
+            var order_id = result.insertId;
+        // Save ORDERDETAIL Records
+        // There could be one or more items in the shopping cart
+            req.session.cart.forEach((cartitem, index) => {
+        // Perform ORDERDETAIL table insert
+            let insertquery = "INSERT INTO order_items(order_id, product_id, price, quantity) VALUES (?, ?, (SELECT saleprice from product where id = " + cartitem + "), 1)";
+                db.query(insertquery,[order_id, cartitem, req.session.qty[index]],(err, result) => {
+                    if (err) {res.render('error');}
+                });
+            });
+            // Empty out the items from the cart and quantity arrays
+            req.session.cart = [];
+            req.session.qty = [];
+            // Display confirmation page
+            res.render('checkout', {ordernum: order_id });
+            }
+        });
+    }
+    else {
+    // Prompt customer to login
+    res.redirect('/customer/login');
+    }
+});
+    
+
+
+// ==================================================
+// Route Check Login Credentials
+// ==================================================
+router.get('/logout', function(req, res, next) {
+    req.session.customer_id = 0;
+    req.session.custname = "";
+    req.session.cart=[];
+    req.session.qty=[];
+    res.redirect('/');
 });
 
 
