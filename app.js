@@ -7,6 +7,8 @@ var layouts = require('express-ejs-layouts');
 
 const mariadb = require('mariadb/callback');
 const dotenv = require('dotenv');
+const session = require('express-session');
+
 
 dotenv.config();
 const db = mariadb.createConnection({host: process.env.DB_HOST,
@@ -41,6 +43,7 @@ var categoryRouter = require('./routes/category');
 var searchRouter = require('./routes/search');
 var promotionRouter = require('./routes/promotion');
 var reportRouter = require('./routes/report');
+var catalogRouter = require('./routes/catalog.js');
 
 var app = express();
 
@@ -48,6 +51,12 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(layouts);
+
+app.use(session({secret: 'iota'}));
+app.use(function(req,res,next){
+  res.locals.session = req.session;
+  next();
+});
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -70,6 +79,7 @@ app.use('/category', categoryRouter);
 app.use('/search', searchRouter);
 app.use('/promotion', promotionRouter);
 app.use('/report', reportRouter);
+app.use('/catalog', catalogRouter);
 
 
 

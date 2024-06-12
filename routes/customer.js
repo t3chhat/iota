@@ -6,7 +6,7 @@ var router = express.Router();
 // URL: http://localhost:3002/product/ 
 // ==================================================
 router.get('/', function(req, res, next) {
-let query = "SELECT id, first_name, middle_name, last_name, email_address, phone_number, password, address_line1, address_line2, city, state, zip_code, country, payment_method, card_number, card_expiry, card_cvv FROM customer"; 
+let query = "SELECT id, first_name, middle_name, last_name, email_address, phone_number, username, password, address_line1, address_line2, city, state, zip_code, country, payment_method, card_number, card_expiry, card_cvv FROM customer"; 
 
     // execute query
     db.query(query, (err, result) => {
@@ -22,7 +22,7 @@ let query = "SELECT id, first_name, middle_name, last_name, email_address, phone
 // Route to view one specific record. Notice the view is one record
 // ==================================================
 router.get('/:recordid/show', function(req, res, next) {
-    let query = "SELECT id, first_name, middle_name, last_name, email_address, phone_number, password, address_line1, address_line2, city, state, zip_code, country, payment_method, card_number, card_expiry, card_cvv FROM customer WHERE id = " + req.params.recordid;
+    let query = "SELECT id, first_name, middle_name, last_name, email_address, phone_number, username, password, address_line1, address_line2, city, state, zip_code, country, payment_method, card_number, card_expiry, card_cvv FROM customer WHERE id = " + req.params.recordid;
 
     // execute query
     db.query(query, (err, result) => {
@@ -48,9 +48,9 @@ router.get('/addrecord', function(req, res, next) {
 // ==================================================
 router.post('/', function(req, res, next) {
 
-    let insertquery = "INSERT INTO customer (first_name, middle_name, last_name, email_address, phone_number, password, address_line1, address_line2, city, state, zip_code, country, payment_method, card_number, card_expiry, card_cvv) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    let insertquery = "INSERT INTO customer (first_name, middle_name, last_name, email_address, phone_number, username, password, address_line1, address_line2, city, state, zip_code, country, payment_method, card_number, card_expiry, card_cvv) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    db.query(insertquery,[req.body.first_name, req.body.middle_name, req.body.last_name, req.body.email_address, req.body.phone_number, req.body.password, req.body.address_line1, req.body.address_line2, req.body.city, req.body.state, req.body.zip_code, req.body.country, req.body.payment_method, req.body.card_number, req.body.card_expiry, req.body.card_cvv],(err, result) => {
+    db.query(insertquery,[req.body.first_name, req.body.middle_name, req.body.last_name, req.body.email_address, req.body.phone_number, req.body.username, req.body.password, req.body.address_line1, req.body.address_line2, req.body.city, req.body.state, req.body.zip_code, req.body.country, req.body.payment_method, req.body.card_number, req.body.card_expiry, req.body.card_cvv],(err, result) => {
         if (err) {
             console.log(err);
             res.render('error');
@@ -64,7 +64,7 @@ router.post('/', function(req, res, next) {
 // Route to edit one specific record.
 // ==================================================
 router.get('/:recordid/edit', function(req, res, next) {
-    let query = "SELECT id, first_name, middle_name, last_name, email_address, phone_number, password, address_line1, address_line2, city, state, zip_code, country, payment_method, card_number, card_expiry, card_cvv FROM customer WHERE id = " + req.params.recordid;
+    let query = "SELECT id, first_name, middle_name, last_name, email_address, phone_number, username, password, address_line1, address_line2, city, state, zip_code, country, payment_method, card_number, card_expiry, card_cvv FROM customer WHERE id = " + req.params.recordid;
 
     // execute query
     db.query(query, (err, result) => {
@@ -82,9 +82,9 @@ router.get('/:recordid/edit', function(req, res, next) {
 // Route to save edited data in database.
 // ==================================================
 router.post('/save', function(req, res, next) {
-    let updatequery = "UPDATE customer SET first_name = ?, middle_name = ?, last_name = ?, email_address = ?, phone_number = ?, password = ?, address_line1 = ?, address_line2 = ?, city = ?, state = ?, zip_code = ?, country = ?, payment_method = ?, card_number = ?, card_expiry = ?, card_cvv = ? WHERE id = " + req.body.id;
+    let updatequery = "UPDATE customer SET first_name = ?, middle_name = ?, last_name = ?, email_address = ?, phone_number = ?, username = ?, password = ?, address_line1 = ?, address_line2 = ?, city = ?, state = ?, zip_code = ?, country = ?, payment_method = ?, card_number = ?, card_expiry = ?, card_cvv = ? WHERE id = " + req.body.id;
 
-    db.query(updatequery,[req.body.first_name, req.body.middle_name, req.body.last_name, req.body.email_address, req.body.phone_number, req.body.password, req.body.address_line1, req.body.address_line2, req.body.city, req.body.state, req.body.zip_code, req.body.country, req.body.payment_method, req.body.card_number, req.body.card_expiry, req.body.card_cvv],(err, result) => {
+    db.query(updatequery,[req.body.first_name, req.body.middle_name, req.body.last_name, req.body.email_address, req.body.phone_number, req.body.username, req.body.password, req.body.address_line1, req.body.address_line2, req.body.city, req.body.state, req.body.zip_code, req.body.country, req.body.payment_method, req.body.card_number, req.body.card_expiry, req.body.card_cvv],(err, result) => {
 
         if (err) {
             console.log(err);
