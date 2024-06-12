@@ -6,8 +6,8 @@
 <tr> <td> Promotion Name: </td> <td> <input type="text" value="<%= onerec.promo_title %>" name="promo_title" required> </td> </tr>
 <tr> <td> Promotion Image: </td> <td> <input type="text" value="<%= onerec.promo_image %>" name="promo_image" required> </td> </tr>
 <tr> <td> Description: </td> <td> <input type="text" value="<%= onerec.description %>" name="description" required> </td> </tr>
-<tr> <td> Start Date: </td> <td> <input type="date" value="<%= onerec.start_date %>" name="start_date" required> </td> </tr>
-<tr> <td> End Date: </td> <td> <input type="date" value="<%= onerec.end_date %>" name="end_date" required> </td> </tr>
+<tr> <td> Start Date: </td> <td> <input type="date" value="<%= onerec.start_date.toISOString().split('T')[0] %>" name="start_date" required> </td> </tr>
+<tr> <td> End Date: </td> <td> <input type="date" value="<%= onerec.end_date.toISOString().split('T')[0] %>" name="end_date" required> </td> </tr>
 <tr> <td> Discount Rate: </td> <td> <input type="text" value="<%= onerec.discount_rate %>" name="discount_rate" required> </td> </tr>
 
 </table>

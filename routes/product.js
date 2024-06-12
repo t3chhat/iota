@@ -42,6 +42,23 @@ router.get('/addrecord', function(req, res, next) {
     res.render('product/addrec');
     });
     
+    
+// ==================================================
+// Route to show empty form to obtain input form end-user.
+// ==================================================
+router.get('/addrecord', function(req, res, next) {
+    let query = "SELECT id, category_name FROM category";
+    // execute query
+    db.query(query, (err, categories) => {
+        if (err) {
+            console.log(err);
+            es.render('error');
+        }
+    res.render('product/addrec', {category: categories});
+    });
+});
+    
+
 
 // ==================================================
 // Route to obtain user input and save in database.
