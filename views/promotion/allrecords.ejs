@@ -17,8 +17,8 @@
             <td><%= recref.promo_title %></td>
             <td><%= recref.promo_image %></td>
             <td><%= recref.description %></td>
-            <td><%= recref.start_date %></td>
-            <td><%= recref.end_date %></td>
+            <td><%= recref.start_date.toLocaleDateString('en-US') %></td>
+            <td><%= recref.end_date.toLocaleDateString('en-US') %></td>
             <td><%= recref.discount_rate %></td>
             <td><a href='/promotion/<%= recref.id %>/show'> Details</a></td>
             <td><a href='/promotion/<%= recref.id %>/edit'>Edit</a></td>

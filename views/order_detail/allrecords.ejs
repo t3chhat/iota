@@ -13,7 +13,7 @@
         <tr>
             <td><%= recref.id %></td>
             <td><%= recref.user_id %></td>
-            <td><%= recref.order_date %></td>
+            <td><%= recref.order_date.toLocaleDateString('en-US') %></td>
             <td><%= recref.total_amount %></td>
             <td><%= recref.order_status %></td>
             <td><a href='/order_detail/<%= recref.id %>/show'> Details</a></td>

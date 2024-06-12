@@ -2,7 +2,7 @@
 <table>
     <tr> <td> Order ID </td> <td> <%= onerec.id %> </td> </tr>
     <tr> <td> Customer ID: </td> <td> <%= onerec.user_id %> </td> </tr>
-    <tr> <td> Order Date: </td> <td> <%= onerec.order_date %> </td> </tr>
+    <tr> <td> Order Date: </td> <td> <%= onerec.order_date.toLocaleDateString('en-US') %> </td> </tr>
     <tr> <td> Total Amount: </td> <td> <%= onerec.total_amount %> </td> </tr>
     <tr> <td> Order Status: </td> <td> <%= onerec.order_status %> </td> </tr>
 </table>

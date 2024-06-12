@@ -15,6 +15,6 @@
     <tr> <td> Country: </td> <td> <%= onerec.country %> </td> </tr>
     <tr> <td> Payment Method: </td> <td> <%= onerec.payment_method %> </td> </tr>
     <tr> <td> Card Number: </td> <td> <%= onerec.card_number %> </td> </tr>
-    <tr> <td> Cary Expiry: </td> <td> <%= onerec.cary_expiry %> </td> </tr>
+    <tr> <td> Cary Expiry: </td> <td> <%= onerec.card_expiry.toLocaleDateString('en-US') %> </td> </tr>
     <tr> <td> Card CVV: </td> <td> <%= onerec.card_cvv %> </td> </tr>
-</table>
+</table> 
