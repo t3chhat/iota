@@ -3,18 +3,19 @@ var router = express.Router();
 
 // ==================================================
 // Route to list all records. Display view to list all records
-// URL: http://localhost:3002/product/ 
+// URL: http://localhost:3002/product/
 // ==================================================
 router.get('/', function(req, res, next) {
-let query = "SELECT id, promo_title, promo_image, description, start_date, end_date, discount_rate FROM promotion"; 
+let query = "SELECT id, promo_title, promo_image, description, start_date, end_date, discount_rate FROM promotion";
 
     // execute query
     db.query(query, (err, result) => {
 		if (err) {
 			console.log(err);
 			res.render('error');
+		} else {
+		res.render('promotion/allrecords', {allrecs: result });
 		}
-	res.render('promotion/allrecords', {allrecs: result });
     });
 });
 
@@ -22,10 +23,10 @@ let query = "SELECT id, promo_title, promo_image, description, start_date, end_d
 // Route to view one specific record. Notice the view is one record
 // ==================================================
 router.get('/:recordid/show', function(req, res, next) {
-    let query = "SELECT id, promo_title, promo_image, description, start_date, end_date, discount_rate FROM promotion WHERE id = " + req.params.recordid;
+    let query = "SELECT id, promo_title, promo_image, description, start_date, end_date, discount_rate FROM promotion WHERE id = ?";
 
     // execute query
-    db.query(query, (err, result) => {
+    db.query(query, [req.params.recordid], (err, result) => {
         if (err) {
             console.log(err);
             res.render('error');
@@ -41,7 +42,7 @@ router.get('/:recordid/show', function(req, res, next) {
 router.get('/addrecord', function(req, res, next) {
     res.render('promotion/addrec');
     });
-    
+
 
 // ==================================================
 // Route to obtain user input and save in database.
@@ -64,10 +65,10 @@ router.post('/', function(req, res, next) {
 // Route to edit one specific record.
 // ==================================================
 router.get('/:recordid/edit', function(req, res, next) {
-    let query = "SELECT id, promo_title, promo_image, description, start_date, end_date, discount_rate FROM promotion WHERE id = " + req.params.recordid;
+    let query = "SELECT id, promo_title, promo_image, description, start_date, end_date, discount_rate FROM promotion WHERE id = ?";
 
     // execute query
-    db.query(query, (err, result) => {
+    db.query(query, [req.params.recordid], (err, result) => {
         if (err) {
             console.log(err);
             res.render('error');
@@ -76,15 +77,15 @@ router.get('/:recordid/edit', function(req, res, next) {
         }
     });
 });
-    
+
 
 // ==================================================
 // Route to save edited data in database.
 // ==================================================
 router.post('/save', function(req, res, next) {
-    let updatequery = "UPDATE promotion SET promo_title = ?, promo_image = ?, description = ?, start_date = ?, end_date = ?, discount_rate = ? WHERE id = " + req.body.id;
+    let updatequery = "UPDATE promotion SET promo_title = ?, promo_image = ?, description = ?, start_date = ?, end_date = ?, discount_rate = ? WHERE id = ?";
 
-    db.query(updatequery,[req.body.promo_title, req.body.promo_image, req.body.description, req.body.start_date, req.body.end_date, req.body.discount_rate],(err, result) => {
+    db.query(updatequery,[req.body.promo_title, req.body.promo_image, req.body.description, req.body.start_date, req.body.end_date, req.body.discount_rate, req.body.id],(err, result) => {
 
         if (err) {
             console.log(err);
@@ -100,10 +101,10 @@ router.post('/save', function(req, res, next) {
 // Route to delete one specific record.
 // ==================================================
 router.get('/:recordid/delete', function(req, res, next) {
-    let query = "DELETE FROM promotion WHERE id = " + req.params.recordid;
+    let query = "DELETE FROM promotion WHERE id = ?";
 
     // execute query
-    db.query(query, (err, result) => {
+    db.query(query, [req.params.recordid], (err, result) => {
 
         if (err) {
             console.log(err);
@@ -113,7 +114,7 @@ router.get('/:recordid/delete', function(req, res, next) {
         }
     });
 });
-    
-    
+
+
 
 module.exports = router;

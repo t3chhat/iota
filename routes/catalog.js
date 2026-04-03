@@ -8,9 +8,10 @@ router.get('/', function(req, res, next) {
     // execute query
     db.query(query, (err, result) => {
         if (err) {
-        res.redirect('error');
-    }           
+        res.render('error');
+    } else {
         res.render('catalog', {allrecs: result });
+    }
     });
 });
 
@@ -42,7 +43,7 @@ router.get('/', function(req, res, next) {
             }
     res.redirect('/catalog/cart');
 });
-    
+
 // ==================================================
 // Route to show shopping cart
 // ==================================================
@@ -50,16 +51,17 @@ router.get('/', function(req, res, next) {
         if (!Array.isArray(req.session.cart) || !req.session.cart.length){
             res.render('cart', {cartitems: 0 });
         } else {
-            let query = "SELECT id, product_name, description, price, size, color, brand_id, category_id, sold, prod_image, homepage FROM product WHERE id IN (" + req.session.cart + ") order by find_in_set(id, '" + req.session.cart + "');";
+            var placeholders = req.session.cart.map(() => '?').join(',');
+            let query = "SELECT id, product_name, description, price, size, color, brand_id, category_id, sold, prod_image, homepage FROM product WHERE id IN (" + placeholders + ") ORDER BY FIND_IN_SET(id, ?)";
 
         // execute query
-        db.query(query, (err, result) => {
+        db.query(query, [...req.session.cart, req.session.cart.join(',')], (err, result) => {
             if (err) {res.render('error');} else
                 {res.render('cart', {cartitems: result, qtys: req.session.qty });}
                 });
         }
     });
-    
+
 
 // ==================================================
 // Route to remove an item from the cart
@@ -72,7 +74,42 @@ router.get('/', function(req, res, next) {
     req.session.qty.splice(n,1);
     res.redirect('/catalog/cart');
 });
-    
+
+// ==================================================
+// Route to checkout - save cart items to order tables
+// ==================================================
+    router.get('/checkout', function(req, res, next) {
+        // Check to make sure the customer has logged-in
+        if (typeof req.session.customer_id !== 'undefined' && req.session.customer_id ) {
+            // Save ORDER_DETAIL Record:
+            let insertquery = "INSERT INTO order_detail(user_id, order_date, total_amount, order_status) VALUES (?, now(), NULL, 'Pending')";
+                db.query(insertquery,[req.session.customer_id],(err, result) => {
+                    if (err) {
+                        console.log(err);
+                        res.render('error');
+                    } else {
+            // Obtain the order_id value of the newly created order
+                var order_id = result.insertId;
+            // Save ORDER_ITEMS Records
+                req.session.cart.forEach((cartitem, index) => {
+                    let insertquery = "INSERT INTO order_items(order_id, product_id, price, quantity) VALUES (?, ?, (SELECT price FROM product WHERE id = ?), ?)";
+                    db.query(insertquery,[order_id, cartitem, cartitem, req.session.qty[index]],(err, result) => {
+                        if (err) { console.log(err); }
+                    });
+                });
+                // Empty out the items from the cart and quantity arrays
+                req.session.cart = [];
+                req.session.qty = [];
+                // Display confirmation page
+                res.render('checkout', {ordernum: order_id });
+                }
+            });
+        }
+        else {
+        // Prompt customer to login
+        res.redirect('/customer/login');
+        }
+    });
+
 
 module.exports = router;
-

@@ -8,17 +8,13 @@
             <th>Email Address</th>
             <th>Phone Number</th>
             <th>Username</th>
-            <th>Password</th>
             <th>Address Line 1</th>
-            <th>Address Line 1</th>
+            <th>Address Line 2</th>
             <th>City</th>
             <th>State</th>
             <th>Zip Code</th>
             <th>Country</th>
             <th>Payment Method</th>
-            <th>Card Number</th>
-            <th>Card Expiry</th>
-            <th>Card CVV</th>
             <th>Admin?</th>
         </tr>
 
@@ -32,7 +28,6 @@
             <td><%= recref.email_address %></td>
             <td><%= recref.phone_number %></td>
             <td><%= recref.username %></td>
-            <td><%= recref.password %></td>
             <td><%= recref.address_line1 %> </td>
             <td><%= recref.address_line2 %> </td>
             <td><%= recref.city %></td>
@@ -40,9 +35,6 @@
             <td><%= recref.zip_code %></td>
             <td><%= recref.country %></td>
             <td><%= recref.payment_method %></td>
-            <td><%= recref.card_number %></td>
-            <td><%= recref.card_expiry.toLocaleDateString('en-US') %></td>
-            <td><%= recref.card_cvv %></td>
             <td><%= recref.isadmin %></td>
             <td><a href='/customer/<%= recref.id %>/show'> Details</a></td>
             <td><a href='/customer/<%= recref.id %>/edit'>Edit</a></td>
@@ -53,10 +45,7 @@
     <% }); %>
     </table>
     <% } else { %>
-        <p>Not Records Available</p>
+        <p>No Records Available</p>
     <% } %>
 
 <p> <a href='/customer/addrecord'>Add New</a> </p>
-
-
-
