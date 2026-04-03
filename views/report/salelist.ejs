@@ -18,7 +18,7 @@
             <td><%= recref.last_name %></td>
             <td><%= recref.order_date.toLocaleDateString('en-US') %></td>
             <td><%= recref.product_name %></td>
-            <td><%= Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(recref.saleprice) %> </td>
+            <td><%= Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(recref.price) %> </td>
             <td><%= recref.quantity %></td>
 
         </tr>
@@ -27,4 +27,3 @@
     <% } else { %>
         <p>No Records Available</p>
     <% } %>
- 

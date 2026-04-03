@@ -11,7 +11,7 @@
             <th>Color</th>
             <th>Quantity</th>
             <th>Items Cost</th>
-            <th>Action</th> 
+            <th>Action</th>
         </tr>
         <% cartitems.forEach((item, index) => { %>
             <tr>
@@ -25,7 +25,7 @@
                 <td><%= itemscost %> </td>
                 <% totprice = totprice + itemscost %>
                 <td><form action="/catalog/remove" method="post" >
-                    <input type="hidden" name="id" value=<%= item.id %> >
+                    <input type="hidden" name="id" value="<%= item.id %>" >
                     <button type="submit">Remove</button>
             </form></td>
         </tr>
@@ -34,10 +34,9 @@
             <td colspan="4"><b>Totals</b></td>
             <td><%= totqty %></td>
             <td><%= totprice %></td>
-            <td><button class='button1' onclick="window.location.href='/catalog/checkout'">Checkout</button>
+            <td><button class='button1' onclick="window.location.href='/catalog/checkout'">Checkout</button></td>
         </tr>
     </table>
-<% } else { %>  
+<% } else { %>
     <p>Cart Is Empty</p>
-<% } %> 
-
+<% } %>

@@ -20,10 +20,9 @@ const db = mariadb.createConnection({host: process.env.DB_HOST,
 db.connect((err) => {
   if (err) {
     console.log("Unable to connect to database due to error: " + err);
-res.render('error');
   } else {
     console.log("Connected to DB");
-}
+  }
 });
 global.db = db;
 
@@ -52,7 +51,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(layouts);
 
-app.use(session({secret: 'iota'}));
+app.use(session({secret: 'iota', resave: false, saveUninitialized: true}));
 app.use(function(req,res,next){
   res.locals.session = req.session;
   next();

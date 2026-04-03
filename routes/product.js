@@ -3,18 +3,19 @@ var router = express.Router();
 
 // ==================================================
 // Route to list all records. Display view to list all records
-// URL: http://localhost:3002/product/ 
+// URL: http://localhost:3002/product/
 // ==================================================
 router.get('/', function(req, res, next) {
-let query = "SELECT id, product_name, description, price, size, color, brand_id, category_id, sold, homepage FROM product"; 
+let query = "SELECT id, product_name, description, price, size, color, brand_id, category_id, sold, homepage FROM product";
 
     // execute query
     db.query(query, (err, result) => {
 		if (err) {
 			console.log(err);
-			res.render('error');
+			return res.render('error');
+		} else {
+		res.render('product/allrecords', {allrecs: result });
 		}
-	res.render('product/allrecords', {allrecs: result });
     });
 });
 
@@ -22,10 +23,10 @@ let query = "SELECT id, product_name, description, price, size, color, brand_id,
 // Route to view one specific record. Notice the view is one record
 // ==================================================
 router.get('/:recordid/show', function(req, res, next) {
-    let query = "SELECT id, product_name, description, price, size, color, brand_id, category_id, sold, homepage FROM product WHERE id = " + req.params.recordid;
+    let query = "SELECT id, product_name, prod_image, description, price, size, color, brand_id, category_id, sold, homepage FROM product WHERE id = ?";
 
     // execute query
-    db.query(query, (err, result) => {
+    db.query(query, [req.params.recordid], (err, result) => {
         if (err) {
             console.log(err);
             res.render('error');
@@ -39,25 +40,17 @@ router.get('/:recordid/show', function(req, res, next) {
 // Route to show empty form to obtain input form end-user.
 // ==================================================
 router.get('/addrecord', function(req, res, next) {
-    res.render('product/addrec');
-    });
-    
-    
-// ==================================================
-// Route to show empty form to obtain input form end-user.
-// ==================================================
-router.get('/addrecord', function(req, res, next) {
     let query = "SELECT id, category_name FROM category";
     // execute query
     db.query(query, (err, categories) => {
         if (err) {
             console.log(err);
-            es.render('error');
+            res.render('error');
+        } else {
+        res.render('product/addrec', {category: categories});
         }
-    res.render('product/addrec', {category: categories});
     });
 });
-    
 
 
 // ==================================================
@@ -94,10 +87,10 @@ router.post('/', function(req, res, next) {
 // Route to edit one specific record.
 // ==================================================
 router.get('/:recordid/edit', function(req, res, next) {
-    let query = "SELECT id, product_name, prod_image, description, price, size, color, brand_id, category_id, sold, homepage FROM product WHERE id = " + req.params.recordid;
+    let query = "SELECT id, product_name, prod_image, description, price, size, color, brand_id, category_id, sold, homepage FROM product WHERE id = ?";
 
     // execute query
-    db.query(query, (err, result) => {
+    db.query(query, [req.params.recordid], (err, result) => {
         if (err) {
             console.log(err);
             res.render('error');
@@ -106,13 +99,13 @@ router.get('/:recordid/edit', function(req, res, next) {
         }
     });
 });
-    
+
 
 // ==================================================
 // Route to save edited data in database.
 // ==================================================
 router.post('/save', function(req, res, next) {
-    let updatequery = "UPDATE product SET product_name = ?, prod_image = ?, description = ?, price = ?, size = ?, color = ?, brand_id = ?, category_id = ?, sold = ?, homepage = ? WHERE id = " + req.body.id;
+    let updatequery = "UPDATE product SET product_name = ?, prod_image = ?, description = ?, price = ?, size = ?, color = ?, brand_id = ?, category_id = ?, sold = ?, homepage = ? WHERE id = ?";
 
     var homepage_value=0;
         if (req.body.homepage)
@@ -126,7 +119,7 @@ router.post('/save', function(req, res, next) {
                 sold_value = 1;
             }
 
-    db.query(updatequery,[req.body.product_name, req.body.prod_image, req.body.description, req.body.price, req.body.size, req.body.color, req.body.brand_id, req.body.category_id, sold_value, homepage_value],(err, result) => {
+    db.query(updatequery,[req.body.product_name, req.body.prod_image, req.body.description, req.body.price, req.body.size, req.body.color, req.body.brand_id, req.body.category_id, sold_value, homepage_value, req.body.id],(err, result) => {
 
         if (err) {
             console.log(err);
@@ -142,10 +135,10 @@ router.post('/save', function(req, res, next) {
 // Route to delete one specific record.
 // ==================================================
 router.get('/:recordid/delete', function(req, res, next) {
-    let query = "DELETE FROM product WHERE id = " + req.params.recordid;
+    let query = "DELETE FROM product WHERE id = ?";
 
     // execute query
-    db.query(query, (err, result) => {
+    db.query(query, [req.params.recordid], (err, result) => {
 
         if (err) {
             console.log(err);
@@ -155,7 +148,7 @@ router.get('/:recordid/delete', function(req, res, next) {
         }
     });
 });
-    
-    
+
+
 
 module.exports = router;
