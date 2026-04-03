@@ -12,7 +12,7 @@ let query = "SELECT id, order_id, product_id, price, quantity FROM order_items";
     db.query(query, (err, result) => {
 		if (err) {
 			console.log(err);
-			res.render('error');
+			return res.render('error');
 		} else {
 		res.render('order_items/allrecords', {allrecs: result });
 		}

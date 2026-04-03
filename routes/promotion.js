@@ -12,7 +12,7 @@ let query = "SELECT id, promo_title, promo_image, description, start_date, end_d
     db.query(query, (err, result) => {
 		if (err) {
 			console.log(err);
-			res.render('error');
+			return res.render('error');
 		} else {
 		res.render('promotion/allrecords', {allrecs: result });
 		}

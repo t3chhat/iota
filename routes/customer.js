@@ -22,7 +22,7 @@ let query = "SELECT id, first_name, middle_name, last_name, email_address, phone
     db.query(query, (err, result) => {
 		if (err) {
 			console.log(err);
-			res.render('error');
+			return res.render('error');
 		} else {
 		res.render('customer/allrecords', {allrecs: result });
 		}
@@ -105,7 +105,7 @@ router.post('/login', function(req, res, next) {
     let query = "SELECT id, first_name, last_name, password FROM customer WHERE username = ?";
     // execute query
     db.query(query, [req.body.username], (err, result) => {
-        if (err) {res.render('error');}
+        if (err) { return res.render('error');}
         else {
             if(result[0])
                 {

@@ -19,7 +19,7 @@ let query = "SELECT id, first_name, middle_name, last_name, email_address, phone
     db.query(query, (err, result) => {
 		if (err) {
 			console.log(err);
-			res.render('error');
+			return res.render('error');
 		} else {
 		res.render('report/customerlist', {allrecs: result });
 		}
@@ -38,7 +38,7 @@ router.get('/product', function(req, res, next) {
         db.query(query, (err, result) => {
             if (err) {
                 console.log(err);
-                res.render('error');
+                return res.render('error');
             } else {
             res.render('report/productlist', {allrecs: result });
             }
@@ -59,7 +59,7 @@ router.get('/product', function(req, res, next) {
             db.query(query, (err, result) => {
                 if (err) {
                     console.log(err);
-                    res.render('error');
+                    return res.render('error');
                 } else {
                 res.render('report/salelist', {allrecs: result });
                 }

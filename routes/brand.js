@@ -12,7 +12,7 @@ let query = "SELECT id, brand_name FROM brand";
     db.query(query, (err, result) => {
 		if (err) {
 			console.log(err);
-			res.render('error');
+			return res.render('error');
 		} else {
 		res.render('brand/allrecords', {allrecs: result });
 		}

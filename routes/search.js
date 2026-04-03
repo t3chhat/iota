@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
     db.query(query, [searchterm, searchterm], (err, result) => {
         if (err) {
             console.log(err);
-            res.render('error');
+            return res.render('error');
         } else {
             res.render('search', {allrecs: result});
         }

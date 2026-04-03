@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
     // execute query
     db.query(query, (err, result) => {
         if (err) {
-        res.render('error');
+        return res.render('error');
     } else {
         res.render('catalog', {allrecs: result });
     }
@@ -56,7 +56,7 @@ router.get('/', function(req, res, next) {
 
         // execute query
         db.query(query, [...req.session.cart, req.session.cart.join(',')], (err, result) => {
-            if (err) {res.render('error');} else
+            if (err) { return res.render('error');} else
                 {res.render('cart', {cartitems: result, qtys: req.session.qty });}
                 });
         }
@@ -86,7 +86,7 @@ router.get('/', function(req, res, next) {
                 db.query(insertquery,[req.session.customer_id],(err, result) => {
                     if (err) {
                         console.log(err);
-                        res.render('error');
+                        return res.render('error');
                     } else {
             // Obtain the order_id value of the newly created order
                 var order_id = result.insertId;

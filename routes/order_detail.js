@@ -12,7 +12,7 @@ let query = "SELECT id, user_id, order_date, total_amount, order_status FROM ord
     db.query(query, (err, result) => {
 		if (err) {
 			console.log(err);
-			res.render('error');
+			return res.render('error');
 		} else {
 		res.render('order_detail/allrecords', {allrecs: result });
 		}
